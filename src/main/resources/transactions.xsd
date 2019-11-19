@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+
+  <xs:element name="transactions" type="transactions"/>
+
+  <xs:complexType name="transaction">
+    <xs:sequence>
+      <xs:element name="fromAccountNo" type="xs:string"/>
+      <xs:element name="toAccountNo" type="xs:string"/>
+      <xs:element name="amount" type="xs:decimal"/>
+      <xs:element name="currency" type="xs:string"/>
+      <xs:element name="note" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="transactions">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="1" name="transactions" type="transaction"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
