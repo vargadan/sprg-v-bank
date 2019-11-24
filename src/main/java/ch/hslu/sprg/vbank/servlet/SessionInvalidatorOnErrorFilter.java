@@ -1,4 +1,4 @@
-package com.dani.vbank.servlet;
+package ch.hslu.sprg.vbank.servlet;
 
 import org.slf4j.Logger;
 import org.springframework.core.annotation.Order;

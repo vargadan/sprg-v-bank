@@ -1,6 +1,6 @@
-package com.dani.vbank.controller;
+package ch.hslu.sprg.vbank.controller;
 
-import com.dani.vbank.service.AccountService;
+import ch.hslu.sprg.vbank.service.AccountService;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

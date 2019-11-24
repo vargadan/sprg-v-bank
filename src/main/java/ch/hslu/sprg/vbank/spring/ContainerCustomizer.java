@@ -1,4 +1,4 @@
-package com.dani.vbank.spring;
+package ch.hslu.sprg.vbank.spring;
 
 import org.apache.catalina.Context;
 import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;

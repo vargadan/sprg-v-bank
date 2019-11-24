@@ -1,4 +1,4 @@
-package com.dani.vbank.model;
+package ch.hslu.sprg.vbank.model;
 
 import java.math.BigDecimal;
 

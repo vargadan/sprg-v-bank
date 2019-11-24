@@ -1,7 +1,7 @@
-package com.dani.vbank.service;
+package ch.hslu.sprg.vbank.service;
 
-import com.dani.vbank.model.AccountDetails;
-import com.dani.vbank.model.Transaction;
+import ch.hslu.sprg.vbank.model.AccountDetails;
+import ch.hslu.sprg.vbank.model.Transaction;
 
 import java.math.BigDecimal;
 import java.util.List;

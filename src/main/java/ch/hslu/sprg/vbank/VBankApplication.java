@@ -1,4 +1,4 @@
-package com.dani.vbank;
+package ch.hslu.sprg.vbank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

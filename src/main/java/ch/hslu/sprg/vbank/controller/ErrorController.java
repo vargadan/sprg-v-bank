@@ -1,4 +1,4 @@
-package com.dani.vbank.controller;
+package ch.hslu.sprg.vbank.controller;
 
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;

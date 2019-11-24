@@ -1,4 +1,4 @@
-package com.dani.vbank.controller;
+package ch.hslu.sprg.vbank.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.dani.vbank.model;
+package ch.hslu.sprg.vbank.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

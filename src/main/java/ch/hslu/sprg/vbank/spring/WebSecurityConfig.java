@@ -1,6 +1,6 @@
-package com.dani.vbank.spring;
+package ch.hslu.sprg.vbank.spring;
 
-import com.dani.vbank.auth.VBankAuthenticationProvider;
+import ch.hslu.sprg.vbank.auth.VBankAuthenticationProvider;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

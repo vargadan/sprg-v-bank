@@ -1,8 +1,8 @@
-package com.dani.vbank.controller;
+package ch.hslu.sprg.vbank.controller;
 
-import com.dani.vbank.service.impl.JDBCAccountService;
-import com.dani.vbank.model.AccountDetails;
-import com.dani.vbank.model.Transaction;
+import ch.hslu.sprg.vbank.model.AccountDetails;
+import ch.hslu.sprg.vbank.model.Transaction;
+import ch.hslu.sprg.vbank.service.impl.JDBCAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
