@@ -69,9 +69,8 @@ import javax.servlet.http.*;
 @org.springframework.core.annotation.Order(1)
 public class CsrfFilter implements Filter {
 
-
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, ServletException {
         validate((HttpServletRequest) request, (HttpServletResponse) response);
         chain.doFilter(request, response);
         setToken((HttpServletRequest) request, (HttpServletResponse) response);
@@ -86,8 +85,8 @@ public class CsrfFilter implements Filter {
      */
     private void validate(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         if ("POST".equals(request.getMethod().toUpperCase())) {
-            String csrfTokenIn = request.getParameter("_csrf");
-            String csrfTokenExp = (String) request.getSession().getAttribute("csrfProtectionToken");
+            String csrfTokenIn = request.getParameter("csrfToken");
+            String csrfTokenExp = (String) request.getSession().getAttribute("csrfTokenAttribute");
             if (!csrfTokenExp.equals(csrfTokenIn)) {
                 throw new ServletException("Invalid CSRF token!");
             }
@@ -101,10 +100,10 @@ public class CsrfFilter implements Filter {
      * @param response
      */
     private void setToken(HttpServletRequest request, HttpServletResponse response) {
-        String csrfProtectionToken = (String) request.getSession(true).getAttribute("csrfProtectionToken");
+        String csrfProtectionToken = (String) request.getSession(true).getAttribute("csrfTokenAttribute");
         if (csrfProtectionToken == null) {
-            csrfProtectionToken = UUID.randomUUID().toString();
-            request.getSession().setAttribute("csrfProtectionToken", csrfProtectionToken);
+            csrfProtectionToken = java.util.UUID.randomUUID().toString();
+            request.getSession().setAttribute("csrfTokenAttribute", csrfProtectionToken);
         }
     }
 }
