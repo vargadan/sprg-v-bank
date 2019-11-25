@@ -7,7 +7,7 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
 1. Start the application in debug mode
    * start the Maven configuration for the launch configuration "v-bank run and build" in DEBUG mode (with the green BUG icon next to the arrow;
    you should have created it as described in IntelliJSetup.md)
-1. Open v-bank application ati and log in 
+1. Open v-bank application and log in 
    1. Open http://localhost:8080/ in the browser
    1. Login as 'Victim' with password 'Victim_01'
      * you may open the file _data.sql_ to see what accounts have been created on application start
