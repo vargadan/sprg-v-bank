@@ -63,7 +63,7 @@ public class BankController {
     @RequestMapping(value = "/doTransfer", method = RequestMethod.POST)
     public ModelAndView doTransfer(@ModelAttribute Transaction transaction, ModelMap model) throws Exception {
         if (accountService.transfer(transaction.getFromAccountNo(), transaction.getToAccountNo(), transaction.getAmount(),
-                transaction.getCurrency(), transaction.getNote())) {
+                transaction.getCurrency(), transaction.getComment())) {
             model.addAttribute("info", "Transaction was completed.");
         } else {
             model.addAttribute("info", "Transaction is pending.");

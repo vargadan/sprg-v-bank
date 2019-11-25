@@ -10,7 +10,7 @@ import java.math.BigDecimal;
         "toAccountNo",
         "amount",
         "currency",
-        "note"
+        "comment"
 })
 public class Transaction {
 
@@ -27,17 +27,17 @@ public class Transaction {
     String currency;
 
     @XmlElement(required = true)
-    String note;
+    String comment;
 
     @XmlTransient
     boolean executed;
 
-    public Transaction(String fromAccountNo, String toAccountNo, BigDecimal amount, String currency, String note, boolean executed) {
+    public Transaction(String fromAccountNo, String toAccountNo, BigDecimal amount, String currency, String comment, boolean executed) {
         this.fromAccountNo = fromAccountNo;
         this.toAccountNo = toAccountNo;
         this.amount = amount;
         this.currency = currency;
-        this.note = note;
+        this.comment = comment;
         this.executed = executed;
     }
 
@@ -60,8 +60,8 @@ public class Transaction {
         return this.currency;
     }
 
-    public String getNote() {
-        return this.note;
+    public String getComment() {
+        return this.comment;
     }
 
     public boolean isExecuted() {
@@ -84,8 +84,8 @@ public class Transaction {
         this.currency = currency;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void setExecuted(boolean executed) {

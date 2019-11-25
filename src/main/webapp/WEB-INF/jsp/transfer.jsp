@@ -20,8 +20,8 @@
                     <input id="currency" name="currency" type="text" value="CHF">
                 </p>
                 <p>
-                    <label for="note">Note:</label>
-                    <input id="note" name="note" type="text" value="">
+                    <label for="comment">Comment:</label>
+                    <input id="comment" name="comment" type="text" value="">
                 </p>
                 <%-- Check if the _csrf attribute is set in the session --%>
                 <c:if test="${not empty csrfTokenAttribute}">

@@ -94,7 +94,7 @@ public class JDBCAccountService implements AccountService {
 
     private boolean insertTransaction(String fromAccountId, String toAccountId, BigDecimal amount, String currency, String note, boolean pending) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
-            StringBuilder insert = new StringBuilder("INSERT INTO TRANSACTION (FROM_ACCOUNT,TO_ACCOUNT,AMOUNT,CURRENCY,NOTE,EXECUTED) VALUES('")
+            StringBuilder insert = new StringBuilder("INSERT INTO TRANSACTION (FROM_ACCOUNT,TO_ACCOUNT,AMOUNT,CURRENCY,COMMENT,EXECUTED) VALUES('")
                     .append(fromAccountId).append("','").append(toAccountId).append("',")
                     .append(amount).append(",'").append(currency).append("','")
                     .append(note).append("',").append(!pending).append(")");
@@ -126,7 +126,7 @@ public class JDBCAccountService implements AccountService {
                         resultSet.getString("TO_ACCOUNT"),
                         resultSet.getBigDecimal("AMOUNT"),
                         resultSet.getString("CURRENCY"),
-                        resultSet.getString("NOTE"),
+                        resultSet.getString("COMMENT"),
                         resultSet.getBoolean("EXECUTED")
                 );
                 transactions.add(transaction);

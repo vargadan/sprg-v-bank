@@ -11,7 +11,7 @@
         <th scope="col">Amount</th>
         <th scope="col">Currency</th>
         <th scope="col">Executed</th>
-        <th scope="col">Note</th>
+        <th scope="col">Comment</th>
     </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
             <td>${transaction.amount}</td>
             <td>${transaction.currency}</td>
             <td>${transaction.executed}</td>
-            <td>${transaction.note}</td>
+            <td>${transaction.comment}</td>
         </tr>
     </c:forEach>
     </tbody>

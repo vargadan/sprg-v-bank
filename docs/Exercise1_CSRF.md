@@ -1,17 +1,17 @@
 # Exercise 1 - CSRF
 
-This exercise is to help you understand Cross Site Request Forgery and its most common mitigation
+This exercise is to help you understand Cross Site Request Forgery and its most common mitigation.
 
 ## Setup and Start Applications
 
-1. start the application in debug mode
+1. Start the application in debug mode
    * start the Maven configuration for the launch configuration "v-bank run and build" in DEBUG mode (with the green BUG icon next to the arrow;
    you should have created it as described in IntelliJSetup.md)
-1. open v-bank application ati and log in 
-   1. open http://localhost:8080/ in the browser
-   1. login as 'Victim' with password 'Victim_01'
+1. Open v-bank application ati and log in 
+   1. Open http://localhost:8080/ in the browser
+   1. Login as 'Victim' with password 'Victim_01'
      * you may open the file _data.sql_ to see what accounts have been created on application start
-   1. send some money (i.e. 100 CHF) to account 1-123456-02 with some intelligible note  
+   1. Send some money (i.e. 100 CHF) to account 1-123456-02 with some intelligible comment 
    1. go the transaction history page by clicking on the account number on the home page to see the transaction executed
 1. now on behalf of the Attacker user we execute a CSRF attack against the Victim user. For the sake of simulation we will wear both hats.
   1. make sure that your are logged in as 'Victim' in the v-bank
@@ -26,7 +26,7 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
          <input name="toAccountNo" type="hidden" value="1-123456-07">
          <input name="amount" type="hidden" value="1000">
          <input name="currency" type="hidden" value="CHF">
-         <input name="note" type="hidden" value="You have been CSRF-d!">
+         <input name="comment" type="hidden" value="You have been CSRF-d!">
      <!--    <input type="submit" value="CLICK HERE and win Millions $$$!" />-->
      </form>
 ```  
