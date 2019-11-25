@@ -28,7 +28,7 @@ You may see that:
 
 Please find a way to make the query return the username and password pair of your choice:
 * Use UNION (ALL) injection
-* The second injection does not have to have FROM and WHERE clauses.
+* The second injection does not need to have FROM and WHERE clauses.
 Note that if your are in control of the returned username and password pair you still need to enter the same password on the login page.
 
 ## Fix the query:
