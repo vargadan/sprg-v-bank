@@ -59,18 +59,18 @@ Please only do it if you feel confident with IntelliJ and the Burp proxy tool
      
 ## Mitigations
 * Possible mitigations against CSRF
-  * protect session cookie with samesite attributes 
+  * protect session cookie with same-site attributes 
     * lax if normal GET requests are safe and modifications are behind POST (or PUT/DELETE)
     * strict otherwise
-    * unfortunately depends on web-framework / server if possible
+    * unfortunately depends on web-framework / server / browser support (well, especially with older tech).
   * protect forms with CSRF token
-    * additional token 
+    * additional token to validate state changing requests. This token is not stored as a cookie, hence is not automatically added to every request by the browser. 
 * for more detailed explanations please see: https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md
 
 ## Fix
 * since same-site session cookies are not supported by the current application framework (JEE Servlet 2.3 and Spring 5) we have to revert to other methods
-* Spring security support CSRF tokens out of the box, which is disabled in this exercise so that CSRF can be demonstrated
-* we are going to add our own CSRF filter (filter means that it intercepts all incoming requests and responses and can block/change them) instead to understand how token based mitigation works against CSRF.\
+* Spring security support CSRF tokens out of the box, which is disabled in this exercise so that CSRF can be demonstrated. 
+* We are going to add our own CSRF filter (filter means that it intercepts all incoming requests and responses and can block/change them) instead to understand how token based mitigation works against CSRF.\
 The code of a simple anti CSRF filter:
 ```java
 package ch.hslu.sprg.vbank.filter;
@@ -121,11 +121,11 @@ public class CsrfFilter implements Filter {
     }
 }
 ```  
-This component is a so called filter intercepting all incoming HTTP requests and it does two things:
-1. It checks if the CSRF token exists in the session. If not it creates a token and saves it in the session as a session attribute.\
+This component is a so called filter, it intercepts (filters) all incoming HTTP requests and does two things:
+1. First, it checks if the CSRF token exists in the session. If not it creates a token and saves it in the session as a session attribute.\
 The view component should read it from the session and place it in the form as a hidden value. (Template languages, such as JSP, usually provide easy ways to read session attributes.)
-1. It checks all incoming POSTS requests if they contain a valid CSRF token by reading the token value from the request parameters and comparing it with the value saved in the session. 
-(It checks only POSTS requests becayse those are meant to write resources, i.e. create transactions)
+1. Second, and most importantly, checks all incoming POSTS requests if they contain a valid CSRF token by reading the token value from the request parameters and comparing it with the value saved in the session. 
+(It checks only POSTS requests because those are meant to write resources, i.e. create transactions)
 It throws an Exception if there is no valid CSRF token value coming in as a parameter with the POST request.
 \
 Add the a hidden input of name *_csrf* to the transfer form in *transfer.jsp* to make sure that the CSRF token value is sent as a parameter with the POST request when saving the transaction:\
