@@ -60,8 +60,13 @@ Please only do it if you feel confident with IntelliJ and the Burp proxy tool
 * we are going to add our own CSRF filter (filter means that it intercepts all incoming requests and responses and can block/change them) instead to understand how token based mitigation works against CSRF.\
 The code of a simple anti CSRF filter:
 ```
-@Component
-@Order(1)
+package ch.hslu.sprg.vbank.filter;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+@org.springframework.stereotype.Component
+@org.springframework.core.annotation.Order(1)
 public class CsrfFilter implements Filter {
 
 

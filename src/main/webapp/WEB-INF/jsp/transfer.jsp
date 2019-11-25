@@ -23,7 +23,9 @@
                     <label for="note">Note:</label>
                     <input id="note" name="note" type="text" value="">
                 </p>
+                <%-- Check if the _csrf attribute is set in the session --%>
                 <c:if test="${not empty _csrf}">
+                    <%-- And, if so, set on the form as hidden parameter. --%>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </c:if>
                 <p>
