@@ -101,6 +101,4 @@ public class BankController {
         }
         return new ModelAndView("redirect:/history", model);
     }
-
-
 }
