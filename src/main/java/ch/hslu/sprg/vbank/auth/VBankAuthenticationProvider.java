@@ -34,13 +34,14 @@ public class VBankAuthenticationProvider implements AuthenticationProvider {
     private UserDetails loadUserByUsername(String uname) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            String sql = "SELECT USERNAME, PASSWORD FROM USER U WHERE U.USERNAME = '" + uname + "'";
+            String sql = "SELECT USERNAME, PASSWORD, ROLES FROM USER U WHERE U.USERNAME = '" + uname + "'";
             log.warn(sql);
             ResultSet resultSet = stmt.executeQuery(sql);
             if (resultSet.next()) {
                 final String username = resultSet.getString("USERNAME");
                 final String password = resultSet.getString("PASSWORD");
-                return User.withUsername(username).password(password).roles("USER").build();
+                final String roles = resultSet.getString("ROLES");
+                return User.withUsername(username).password(password).roles(roles).build();
             } else {
                 log.info("No user found with name : " + uname);
                 return null;

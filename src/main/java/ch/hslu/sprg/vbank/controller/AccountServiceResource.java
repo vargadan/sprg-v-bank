@@ -12,15 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class AccountServiceResource {
 
-//    @Autowired
-//    HttpServletRequest request;
+    @Autowired
+    HttpServletRequest request;
 
     @Autowired
     private AccountService delegate;
 
     @RequestMapping(path = "/api/v1/account/{accountId}", produces = "application/json")
     public ResponseEntity<AccountDetails> getAccountDetails(@PathVariable("accountId") String accountId) throws Exception {
-        AccountDetails accountDetails = delegate.getAccountDetails(accountId);
-        return ResponseEntity.ok(accountDetails);
+        if (request.isUserInRole("ACCOUNT_HOLDER")) {
+            AccountDetails accountDetails = delegate.getAccountDetails(accountId);
+            return ResponseEntity.ok(accountDetails);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 }
