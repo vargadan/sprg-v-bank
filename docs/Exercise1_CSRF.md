@@ -134,8 +134,9 @@ Add the a hidden input of name *_csrf* to the transfer form in *transfer.jsp* to
 ## Verify fix
 Having added the CsrfFilter and the token parameter to the form the CSRF request from the attacker site should be blocked.
 You can verify it by placing a break-point in *CsrfFilter.validate(...)*
-1. So please put a breakpoint at CsrfFilter.java:26 (line 26)
+1. So please put a breakpoint at CsrfFilter.java:29 (line 29)
 1. Open the CSRF page at http://sprg-tools.el.eee.intern/csrf_local.html  
 Your break-point should be hit and you should see it block the request and throw _ServletException("Invalid CSRF token!")_
+![](images_exercises/CSRF_Debug_1.png)
 1. Send a transaction again via the transaction page  
-Your break-point should be hit again and it should let the request be processed 
+This time the request should go through and your break-point should not be hit as it contains a valid CSRF token.
