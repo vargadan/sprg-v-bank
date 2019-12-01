@@ -13,9 +13,9 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
      * you may open the file _data.sql_ to see what accounts have been created on application start
    1. Send some money (i.e. 100 CHF) to account 1-123456-02 with some intelligible comment 
    1. go the transaction history page by clicking on the account number on the home page to see the transaction executed
-1. now on behalf of the Attacker user we execute a CSRF attack against the Victim user. For the sake of simulation we will wear both hats.
-  1. make sure that your are logged in as 'Victim' in the v-bank
-  1. Now as the Victim user open the below page in the same browser where v-bank transaction history page is opened:
+1. Then on behalf of the Attacker user we execute a CSRF attack against the Victim user. For the sake of simulation we will wear both hats.
+  1. Make sure that your are logged in as 'Victim' in the v-bank
+  1. Now as the 'Victim' user open the below page in the same browser where v-bank transaction history page is opened:
      * http://sprg-tools.el.eee.intern/csrf_local.html
      * open its source view
 ```html
@@ -32,43 +32,36 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
 ```  
  * it contains a populated hidden form with the Victim's and the Attacker's account number.
  * it submits the form automatically on page load (body.onload attribute)
- * the Victim will not see anything from this as the response is targeted to a hidden frame.
+ * the Victim will not see anything from this as the response of the CSRF request is targeted to a hidden frame.
   1. then go back to the transactions page and refresh it 
-    * you should see that you are 1000 CHF worse off because you have been CSRF-ed
+    * you should see that you are 1000 CHF worse off because "you have been CSRF-ed"
   
-## Understand how the CSRF attack is working with 
+## Understand how the CSRF attack works 
 
-Please only do it if you feel confident with IntelliJ and the Burp proxy tool
-
-  1. setup tools for HTTP interception and Java debugging
-     * start the Burp tool to intercept http calls
-        * in the Proxy > Options tab change the proxy port from 8080 to 8181 so that it does not conflict with the v-bank application
-        * change your browser's proxy to 127.0.0.1:8181 in its settings
-        * make sure that Intercept is ON in the Burp tool (Proxy > Intercep tab)\
-        Important! : please do not open any other pages in the Browser while doing this exercise as their requests will also be intercepted by the Burp proxy and it may easily confuse you. 
-     * Place a debug breakpoint in *BankController.doTransfer(...)* (*BankController* class *doTransfer* method)
-  1. refresh any v-bank application page (i.e. the home page at http://vbank.127.0.0.1.xip.io:8080/) and intercept the http request 
-     * Please note the JSESSION cookie value in the Burp tool (this is the ID of Bob's current user session)
-     * Forward this and all subsequent requests
-  1. go to the csrf attack page and click on the button again so that the CSRF call gets interecpted by Burp
-     * Please note the JSESSION cookie value in the Burp tool (it should be the same as the one with the previous application request)
-     * Forward this and all subsequent requests
-  1. Now execution should stop at the Breakpoint
-     * if you expand the transaction method parameter its properties should be properly populated
-     * if you resume the program (F9 in IntelliJ) the transaction will be properly executed
-     
+1. Make sure that you are logged in as user Victim
+1. Open Google Chrome Devtools (left click on the v-bank page)
+![](images_exercises/OpenDevTools.png)
+   1. Go to the Application tab and check the session cookie holding the session id value
+   ![](images_exercises/DevTools_Cookies.png)
+   1. Go to the Network tab and have a look at how the session ID is attached to the request as Cookie header. The name of the cookie holding the session ID is JSESSIONID.   
+   ![](images_exercises/DevTools_Requests.png)
+2. Switch the browser tab to the page with the CSRF exploit and check the requests sent to http://localhost:8080/doTransfer
+    **You need to open a new instance of DevTool for the CSRF page and then reload to see the network traffic.**
+   You should see that the post request sent by http://sprg-tools.el.eee.intern/csrf_local.html contains the same session Id value in the Cookie header.
+   ![](images_exercises/DevTools_Requests.png)
+   The session cookie holding the session ID value is added to all request to its domain and path (localhost:8080/) automatically by the browser regardless of the page the request originates from.
 ## Mitigations
 * Possible mitigations against CSRF
   * protect session cookie with same-site attributes 
-    * lax if normal GET requests are safe and modifications are behind POST (or PUT/DELETE)
-    * strict otherwise
+    * 'lax' if normal GET requests are safe and modifications are behind POST (or PUT/DELETE)
+    * 'strict' otherwise
     * unfortunately depends on web-framework / server / browser support (well, especially with older tech).
   * protect forms with CSRF token
     * additional token to validate state changing requests. This token is not stored as a cookie, hence is not automatically added to every request by the browser. 
-* for more detailed explanations please see: https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md
+For a more detailed explanation please refer to https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md
 
 ## Fix
-* since same-site session cookies are not supported by the current application framework (JEE Servlet 2.3 and Spring 5) we have to revert to other methods
+* Since same-site session cookies are not supported by the current application framework (JEE Servlet 2.3 and Spring 5) we have to revert to other methods
 * Spring security support CSRF tokens out of the box, which is disabled in this exercise so that CSRF can be demonstrated. 
 * We are going to add our own CSRF filter (filter means that it intercepts all incoming requests and responses and can block/change them) instead to understand how token based mitigation works against CSRF.\
 The code of a simple anti CSRF filter:
@@ -124,8 +117,8 @@ public class CsrfFilter implements Filter {
 This component is a so called filter, it intercepts (filters) all incoming HTTP requests and does two things:
 1. First, it checks if the CSRF token exists in the session. If not it creates a token and saves it in the session as a session attribute.\
 The view component should read it from the session and place it in the form as a hidden value. (Template languages, such as JSP, usually provide easy ways to read session attributes.)
-1. Second, and most importantly, checks all incoming POSTS requests if they contain a valid CSRF token by reading the token value from the request parameters and comparing it with the value saved in the session. 
-(It checks only POSTS requests because those are meant to write resources, i.e. create transactions)
+1. Second, and most importantly, verifies all incoming POSTS requests if they contain a valid CSRF token by reading the token value from the request parameters and comparing it with the value saved in the session. 
+(It checks only POST requests because those are meant to write resources, i.e. create money transactions in our case)
 It throws an Exception if there is no valid CSRF token value coming in as a parameter with the POST request.
 \
 Add the a hidden input of name *_csrf* to the transfer form in *transfer.jsp* to make sure that the CSRF token value is sent as a parameter with the POST request when saving the transaction:\
@@ -133,13 +126,16 @@ Add the a hidden input of name *_csrf* to the transfer form in *transfer.jsp* to
 \(in _transfer.jsp_)
 ### Apply fix
 * Copy-paste above code into CsrfFilter.java (the placeholder should be prepared for you).
-* Open *transfer.jsp* and verify that the token is being placed into the form 
+* Open *transfer.jsp* and verify that the token is being placed into the form:
+```xml
+<input type="hidden" name="csrfToken" value="${csrfTokenAttribute}"/>
+```
 
 ## Verify fix
 Having added the CsrfFilter and the token parameter to the form the CSRF request from the attacker site should be blocked.
 You can verify it by placing a break-point in *CsrfFilter.validate(...)*
 1. So please put a breakpoint at CsrfFilter.java:26 (line 26)
-1. Open the CSRF page at http://sprg-tools.el.eee.intern/csrf_local.html
-  * your break-point should be hit and you should see it block the request and throw _ServletException("Invalid CSRF token!")_
-1. Send a transaction again via the transaction page
-  * your break-point should be hit again and it should let the request be processed 
+1. Open the CSRF page at http://sprg-tools.el.eee.intern/csrf_local.html  
+Your break-point should be hit and you should see it block the request and throw _ServletException("Invalid CSRF token!")_
+1. Send a transaction again via the transaction page  
+Your break-point should be hit again and it should let the request be processed 

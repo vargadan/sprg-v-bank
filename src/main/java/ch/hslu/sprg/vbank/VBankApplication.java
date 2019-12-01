@@ -10,6 +10,4 @@ public class VBankApplication {
         SpringApplication.run(VBankApplication.class, args);
     }
 
-
-
 }
