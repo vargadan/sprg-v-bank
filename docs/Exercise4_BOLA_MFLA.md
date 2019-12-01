@@ -40,3 +40,5 @@ This has to be fixed, you should check if the current user is the one associated
             return ResponseEntity.ok(accountDetails);
         }
 ```
+
+This is a very common mistake when service method are exposed over HTTP. Because as long as they were called via another backend component the input parameters (account number) could not be tampered with, at least it was way more difficult. Hence, the lack of proper access control was not so easily exploitable.  
