@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,6 +27,9 @@ public class VBankAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private HttpServletRequest request;
 
     private UserDetails loadUserByUsername(String uname) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
@@ -64,6 +68,10 @@ public class VBankAuthenticationProvider implements AuthenticationProvider {
                     "VBankAuthenticationProvider.badCredentials",
                     "Bad credentials"));
         }
+    }
+
+    protected void saveUserInfoCookie() {
+
     }
 
     @Override

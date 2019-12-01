@@ -32,6 +32,11 @@
                 addAccountRow('${accountId}');
             </c:forEach>
     }
+
+    function isManager() {
+        //read cookie here
+        return true;
+    }
     </script>
     <div class="container" id="accounts-holder">
     </div>

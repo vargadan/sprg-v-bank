@@ -49,7 +49,7 @@
     </c:if>
     <c:if test="${not empty info}">
         <div class="container">
-            <div class="row alert alert-info" role="alert">${info}</div>
+            <div class="row alert alert-info" role="alert"><c:out value='${info}' escapeXml='true' /></div>
         </div>
     </c:if>
     <c:if test="${not empty message}">

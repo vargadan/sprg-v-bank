@@ -46,6 +46,14 @@ public class BankController {
         return "home";
     }
 
+    @RequestMapping("/home_legacy")
+    public String home_legacy(Model model) throws Exception {
+        String user = request.getRemoteUser();
+        List<AccountDetails> accountDetailsList = accountService.getAccountDetailsForUser(user);
+        model.addAttribute("accounts", accountDetailsList);
+        return "home_legacy";
+    }
+
     @RequestMapping("/history")
     public String history(Model model) throws Exception {
         String accountNo = request.getParameter("accountNo");
