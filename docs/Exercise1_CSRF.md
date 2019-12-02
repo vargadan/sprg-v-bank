@@ -5,7 +5,7 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
 ## Setup and Start Applications
 
 1. Start the application in debug mode
-   * start the Maven configuration for the launch configuration "v-bank run and build" in DEBUG mode with the green BUG icon next to the arrow; (the launch configration should have been created as described in ![](IntelliJSetup.md))
+   * start the Maven configuration for the launch configuration "v-bank run and build" in DEBUG mode with the green BUG icon next to the arrow; (the launch configration should have been created as described [here](IntelliJSetup.md))
 1. Open v-bank application and log in 
    1. Open http://localhost:8080/ in the browser
    1. Login as 'Victim' with password 'Victim_01'
@@ -16,7 +16,7 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
   1. Make sure that your are logged in as 'Victim' in the v-bank
   1. Now as the 'Victim' user open the below page in the same browser where v-bank transaction history page is opened:
      * http://sprg-tools.el.eee.intern/csrf_local.html
-     * open its source view
+     * Open its source view (right click -> View Page Source)
 ```html
      <body onload="document.forms.item(0).submit(); document.getElementById('h3').innerText='Your CSRF request has been successfully sent.'">
      <h2 class="hello-title">Thank you for visiting this page.</h2><h3 id="h3"></h3>
@@ -31,8 +31,8 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
  * It contains a populated hidden form with the Victim's and the Attacker's account number.
  * It submits the form automatically on page load (body.onload attribute)
  * The Victim will not see anything from this as the response of the CSRF request is targeted to a hidden frame.
-  1. Then go back to the transactions page and refresh it 
-    * You should see that you are 1000 CHF worse off because "you have been CSRF-ed"
+ 1. Then go back to the transactions page and refresh it.  
+       You should see that you are 1000 CHF worse off because "you have been CSRF-ed"
   
 ## Understand how the CSRF attack works 
 
@@ -47,14 +47,14 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
     **You need to open a new instance of DevTool for the CSRF page and then reload to see the network traffic.**
    You should see that the post request sent by http://sprg-tools.el.eee.intern/csrf_local.html contains the same session Id value in the Cookie header.
    ![](images_exercises/DevTools_Requests.png)
-   The session cookie holding the session ID value is added to all request to its domain and path (localhost:8080/) automatically by the browser regardless of the page the request originates from.
+   The session ID value from the session cookie is added to the Cookie header of each request to the respective domain and path (localhost:8080/) automatically by the browser regardless of the page the request originates from.
 ## Mitigations
 * Possible mitigations against CSRF
-  * protect session cookie with same-site attributes 
+  * Protect session cookie with same-site attributes 
     * 'lax' if normal GET requests are safe and modifications are behind POST (or PUT/DELETE)
     * 'strict' otherwise
-    * unfortunately depends on web-framework / server / browser support (well, especially with older tech).
-  * protect forms with CSRF token
+    * Unfortunately,it depends on the web-framework / server / browser wether it is supported (well, especially with older tech).
+  * Protect forms with CSRF token
     * additional token to validate state changing requests. This token is not stored as a cookie, hence is not automatically added to every request by the browser. 
 For a more detailed explanation please refer to https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md
 
@@ -115,15 +115,15 @@ public class CsrfFilter implements Filter {
 This component is a so called filter, it intercepts (filters) all incoming HTTP requests and does two things:
 1. First, it checks if the CSRF token exists in the session. If not it creates a token and saves it in the session as a session attribute.\
 The view component should read it from the session and place it in the form as a hidden value. (Template languages, such as JSP, usually provide easy ways to read session attributes.)
-1. Second, and most importantly, verifies all incoming POSTS requests if they contain a valid CSRF token by reading the token value from the request parameters and comparing it with the value saved in the session. 
-(It checks only POST requests because those are meant to write resources, i.e. create money transactions in our case)
+1. Second, and most importantly, verifies all incoming requests of POST http method if they contain a valid CSRF token by reading the token value from the request parameters and comparing it with the value saved in the session.  
+(It checks only POST requests because those are meant to write resources, i.e. create money transactions in our case; please note that PUT/DELETE/PATCH requests can only be made as XHR requests with JavaScript to which the browser does not append cookies automatically)  
 It throws an Exception if there is no valid CSRF token value coming in as a parameter with the POST request.
 \
-Add the a hidden input of name *_csrf* to the transfer form in *transfer.jsp* to make sure that the CSRF token value is sent as a parameter with the POST request when saving the transaction:\
-` <input type="hidden" name="_csrf" value="${csrfProtectionToken}"/>`
-\(in _transfer.jsp_)
+Add the a hidden input of name *csrfToken* to the transfer form in *transfer.jsp* to make sure that the CSRF token value is sent as a parameter with the POST request when saving the transaction:\
+`<input type="hidden" name="csrfToken" value="${csrfTokenAttribute}"/>`
+\(in __transfer.jsp__)
 ### Apply fix
-* Copy-paste above code into CsrfFilter.java (the placeholder should be prepared for you).
+* Copy-paste above code into CsrfFilter.java (the file itself as a placeholder is prepared for you).
 * Open *transfer.jsp* and verify that the token is being placed into the form:
 ```xml
 <input type="hidden" name="csrfToken" value="${csrfTokenAttribute}"/>
