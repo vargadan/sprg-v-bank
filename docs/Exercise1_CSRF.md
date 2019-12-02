@@ -5,14 +5,13 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
 ## Setup and Start Applications
 
 1. Start the application in debug mode
-   * start the Maven configuration for the launch configuration "v-bank run and build" in DEBUG mode (with the green BUG icon next to the arrow;
-   you should have created it as described in IntelliJSetup.md)
+   * start the Maven configuration for the launch configuration "v-bank run and build" in DEBUG mode with the green BUG icon next to the arrow; (the launch configration should have been created as described in ![](IntelliJSetup.md))
 1. Open v-bank application and log in 
    1. Open http://localhost:8080/ in the browser
    1. Login as 'Victim' with password 'Victim_01'
-     * you may open the file _data.sql_ to see what accounts have been created on application start
+     * You may open the file _data.sql_ to see what accounts have been created on application start
    1. Send some money (i.e. 100 CHF) to account 1-123456-02 with some intelligible comment 
-   1. go the transaction history page by clicking on the account number on the home page to see the transaction executed
+   1. Go the transaction history page by clicking on the account number on the home page to see the transaction executed
 1. Then on behalf of the Attacker user we execute a CSRF attack against the Victim user. For the sake of simulation we will wear both hats.
   1. Make sure that your are logged in as 'Victim' in the v-bank
   1. Now as the 'Victim' user open the below page in the same browser where v-bank transaction history page is opened:
@@ -27,14 +26,13 @@ This exercise is to help you understand Cross Site Request Forgery and its most 
          <input name="amount" type="hidden" value="1000">
          <input name="currency" type="hidden" value="CHF">
          <input name="comment" type="hidden" value="You have been CSRF-d!">
-     <!--    <input type="submit" value="CLICK HERE and win Millions $$$!" />-->
      </form>
 ```  
- * it contains a populated hidden form with the Victim's and the Attacker's account number.
- * it submits the form automatically on page load (body.onload attribute)
- * the Victim will not see anything from this as the response of the CSRF request is targeted to a hidden frame.
-  1. then go back to the transactions page and refresh it 
-    * you should see that you are 1000 CHF worse off because "you have been CSRF-ed"
+ * It contains a populated hidden form with the Victim's and the Attacker's account number.
+ * It submits the form automatically on page load (body.onload attribute)
+ * The Victim will not see anything from this as the response of the CSRF request is targeted to a hidden frame.
+  1. Then go back to the transactions page and refresh it 
+    * You should see that you are 1000 CHF worse off because "you have been CSRF-ed"
   
 ## Understand how the CSRF attack works 
 
