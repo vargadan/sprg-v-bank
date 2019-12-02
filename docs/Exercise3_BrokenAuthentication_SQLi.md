@@ -31,8 +31,8 @@ Please find a way to make the query return the username and password pair of you
 * The second injection does not need to have FROM and WHERE clauses.
 Note that if your are in control of the returned username and password pair you still need to enter the same password on the login page.
 
-username is: ' UNION ALL SELECT 'Victim' , 'password' --
-password is: password
+* username is: ' UNION ALL SELECT 'Victim' , 'password' --  
+* password is: password
 
 ## Fix the query:
 ### with prepared statement
