@@ -7,7 +7,7 @@ It uses asynchronous requests to fetch account data from the backend and javascr
 Requests to the account information service are badly authorized, which we will exploit.   
 
 ## Find the vulnerability and exploit it
-1. Login to the the v-bank app as the 'Attacker' user and open Google Developer Tools (left click -> Inspect) 
+1. Login to the the v-bank app as the 'Attacker' (password: 'Attacker_01') user and open Google Developer Tools (left click -> Inspect) 
 ![](images_exercises/HomePage_BOLA.png)
 1. Go to the Network tab. (You may need to reload the page to see requests made to the backend.)
 ![](images_exercises/DevTools_BOLA.png)
