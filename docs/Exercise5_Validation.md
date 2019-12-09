@@ -33,7 +33,7 @@ You can see that it tests not only valid and boundary values, but also possible 
 Please implement the validation logic in method __Validator.validateUserName__.
 You should be fine when the above test runs successfully.
 
-``java
+```java
     public void validateUserName(String username) {
         if (username == null || username.length() == 0) {
             //it cannot be null
@@ -49,7 +49,7 @@ You should be fine when the above test runs successfully.
             throw new ValidationException("Username is in invalid format");
         }
     }
-``
+```
 
 ## Hook username validation into authentication logic
 Validating the username should happen as early as possible, before any validation takes place.
