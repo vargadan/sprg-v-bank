@@ -1,6 +1,5 @@
 package ch.hslu.sprg.vbank.auth;
 
-import ch.hslu.sprg.vbank.validator.Validator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -31,9 +30,6 @@ public class VBankAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private HttpServletRequest request;
-
-    @Autowired
-    private Validator validator;
 
     private UserDetails loadUserByUsername(String uname) throws Exception {
         try (Connection connection = dataSource.getConnection()) {

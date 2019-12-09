@@ -1,5 +1,9 @@
 package ch.hslu.sprg.vbank.model;
 
+import ch.hslu.sprg.vbank.model.primitive.AccountNumber;
+import ch.hslu.sprg.vbank.model.primitive.Amount;
+import ch.hslu.sprg.vbank.model.primitive.Currency;
+
 import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 
@@ -14,17 +18,25 @@ import java.math.BigDecimal;
 })
 public class Transaction {
 
-    @XmlElement(required = true)
-    String fromAccountNo;
+    public AccountNumber getFromAccountNo() {
+        return fromAccountNo;
+    }
+
+    public void setFromAccountNo(AccountNumber fromAccountNo) {
+        this.fromAccountNo = fromAccountNo;
+    }
 
     @XmlElement(required = true)
-    String toAccountNo;
+    AccountNumber fromAccountNo;
 
     @XmlElement(required = true)
-    BigDecimal amount;
+    AccountNumber toAccountNo;
 
     @XmlElement(required = true)
-    String currency;
+    Amount amount;
+
+    @XmlElement(required = true)
+    Currency currency;
 
     @XmlElement(required = true)
     String comment;
@@ -32,10 +44,10 @@ public class Transaction {
     @XmlTransient
     boolean executed;
 
-    public Transaction(String fromAccountNo, String toAccountNo, BigDecimal amount, String currency, String comment, boolean executed) {
-        this.fromAccountNo = fromAccountNo;
-        this.toAccountNo = toAccountNo;
-        this.amount = amount;
+    public Transaction(String fromAccountNo, String toAccountNo, BigDecimal amount, Currency currency, String comment, boolean executed) {
+        this.fromAccountNo = new AccountNumber(fromAccountNo);
+        this.toAccountNo = new AccountNumber(toAccountNo);
+        this.amount = new Amount(amount);
         this.currency = currency;
         this.comment = comment;
         this.executed = executed;
@@ -44,48 +56,40 @@ public class Transaction {
     public Transaction() {
     }
 
-    public String getFromAccountNo() {
-        return this.fromAccountNo;
+    public AccountNumber getToAccountNo() {
+        return toAccountNo;
     }
 
-    public String getToAccountNo() {
-        return this.toAccountNo;
-    }
-
-    public BigDecimal getAmount() {
-        return this.amount;
-    }
-
-    public String getCurrency() {
-        return this.currency;
-    }
-
-    public String getComment() {
-        return this.comment;
-    }
-
-    public boolean isExecuted() {
-        return this.executed;
-    }
-
-    public void setFromAccountNo(String fromAccountNo) {
-        this.fromAccountNo = fromAccountNo;
-    }
-
-    public void setToAccountNo(String toAccountNo) {
+    public void setToAccountNo(AccountNumber toAccountNo) {
         this.toAccountNo = toAccountNo;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public Amount getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Amount amount) {
         this.amount = amount;
     }
 
-    public void setCurrency(String currency) {
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isExecuted() {
+        return executed;
     }
 
     public void setExecuted(boolean executed) {

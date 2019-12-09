@@ -1,56 +1,61 @@
 package ch.hslu.sprg.vbank.model;
 
+import ch.hslu.sprg.vbank.model.primitive.AccountNumber;
+import ch.hslu.sprg.vbank.model.primitive.Amount;
+import ch.hslu.sprg.vbank.model.primitive.Currency;
+import ch.hslu.sprg.vbank.model.primitive.UserName;
+
 import java.math.BigDecimal;
 
 public class AccountDetails {
 
-    private String accountNo;
+    private AccountNumber accountNo;
 
-    private String ownerId;
+    private UserName ownerId;
 
-    private BigDecimal balance;
+    private Amount balance;
 
-    private String currency;
+    private Currency currency;
 
-    public AccountDetails(String accountNo, String ownerId, BigDecimal balance, String currency) {
-        this.accountNo = accountNo;
-        this.ownerId = ownerId;
-        this.balance = balance;
+    public AccountDetails(String accountNo, String ownerId, BigDecimal balance, Currency currency) {
+        this.accountNo = new AccountNumber(accountNo);
+        this.ownerId = new UserName(ownerId);
+        this.balance = new Amount(balance);
         this.currency = currency;
     }
 
     public AccountDetails() {
     }
 
-    public String getAccountNo() {
-        return this.accountNo;
+    public AccountNumber getAccountNo() {
+        return accountNo;
     }
 
-    public String getOwnerId() {
-        return this.ownerId;
-    }
-
-    public BigDecimal getBalance() {
-        return this.balance;
-    }
-
-    public String getCurrency() {
-        return this.currency;
-    }
-
-    public void setAccountNo(String accountNo) {
+    public void setAccountNo(AccountNumber accountNo) {
         this.accountNo = accountNo;
     }
 
-    public void setOwnerId(String ownerId) {
+    public UserName getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(UserName ownerId) {
         this.ownerId = ownerId;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public Amount getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Amount balance) {
         this.balance = balance;
     }
 
-    public void setCurrency(String currency) {
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }
