@@ -51,10 +51,13 @@ You should be fine when the above test runs successfully.
     }
 ```
 
-## Plug username validation into authentication logic
+### Plug username validation into authentication logic
 Validating the username should happen as early as possible, before any validation takes place.
 ``VBankAuthenticationProvider.loadUserByUsername(String uname)`` is the first method in our control which receives the username upon authentication.  
 
 Please call _Validator.validateUserName_ at the very beginning of this method.
 
 You may now try entering invalid input on the login screen.
+
+## Validating transaction and account details
+Please switch to git branch deep_modeling (In IntelliJ: VCS -> Git -> Branches -> select origin/deep_modeling
