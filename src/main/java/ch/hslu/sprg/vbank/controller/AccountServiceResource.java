@@ -1,7 +1,7 @@
 package ch.hslu.sprg.vbank.controller;
 
 import ch.hslu.sprg.vbank.model.AccountDetails;
-import ch.hslu.sprg.vbank.model.primitive.AccountNumber;
+import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
 import ch.hslu.sprg.vbank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

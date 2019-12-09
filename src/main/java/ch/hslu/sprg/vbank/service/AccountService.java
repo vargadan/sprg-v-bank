@@ -2,10 +2,9 @@ package ch.hslu.sprg.vbank.service;
 
 import ch.hslu.sprg.vbank.model.AccountDetails;
 import ch.hslu.sprg.vbank.model.Transaction;
-import ch.hslu.sprg.vbank.model.primitive.AccountNumber;
-import ch.hslu.sprg.vbank.model.primitive.UserName;
+import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
+import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface AccountService {

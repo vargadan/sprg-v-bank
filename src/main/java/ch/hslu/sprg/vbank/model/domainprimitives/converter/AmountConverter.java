@@ -1,6 +1,6 @@
-package ch.hslu.sprg.vbank.model.primitive.converter;
+package ch.hslu.sprg.vbank.model.domainprimitives.converter;
 
-import ch.hslu.sprg.vbank.model.primitive.Amount;
+import ch.hslu.sprg.vbank.model.domainprimitives.Amount;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

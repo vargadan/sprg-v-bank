@@ -1,6 +1,6 @@
-package ch.hslu.sprg.vbank.model.primitive.converter;
+package ch.hslu.sprg.vbank.model.domainprimitives.converter;
 
-import ch.hslu.sprg.vbank.model.primitive.AccountNumber;
+import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

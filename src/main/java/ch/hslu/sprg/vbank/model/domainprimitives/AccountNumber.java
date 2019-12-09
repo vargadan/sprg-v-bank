@@ -1,4 +1,4 @@
-package ch.hslu.sprg.vbank.model.primitive;
+package ch.hslu.sprg.vbank.model.domainprimitives;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

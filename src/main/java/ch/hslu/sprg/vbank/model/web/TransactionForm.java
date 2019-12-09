@@ -1,7 +1,7 @@
 package ch.hslu.sprg.vbank.model.web;
 
 import ch.hslu.sprg.vbank.model.Transaction;
-import ch.hslu.sprg.vbank.model.primitive.Currency;
+import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
 
 import java.math.BigDecimal;
 

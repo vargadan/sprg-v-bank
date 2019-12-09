@@ -1,9 +1,9 @@
 package ch.hslu.sprg.vbank.model;
 
-import ch.hslu.sprg.vbank.model.primitive.AccountNumber;
-import ch.hslu.sprg.vbank.model.primitive.Amount;
-import ch.hslu.sprg.vbank.model.primitive.Currency;
-import ch.hslu.sprg.vbank.model.primitive.UserName;
+import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
+import ch.hslu.sprg.vbank.model.domainprimitives.Amount;
+import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
+import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 
 import java.math.BigDecimal;
 

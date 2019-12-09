@@ -1,8 +1,7 @@
 package ch.hslu.sprg.vbank.validator;
 
-import ch.hslu.sprg.vbank.model.primitive.UserName;
+import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.validation.ValidationException;
