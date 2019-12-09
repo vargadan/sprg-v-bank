@@ -51,9 +51,10 @@ You should be fine when the above test runs successfully.
     }
 ```
 
-## Hook username validation into authentication logic
+## Plug username validation into authentication logic
 Validating the username should happen as early as possible, before any validation takes place.
-``VBankAuthenticationProvider.loadUserByUsername(String uname)`` is the first method in our control which receives the username upon authentication.
+``VBankAuthenticationProvider.loadUserByUsername(String uname)`` is the first method in our control which receives the username upon authentication.  
+
 Please call __Validator.validateUserName__ at the very beginning of this method.
 
 You may now try entering invalid input on the login screen.
