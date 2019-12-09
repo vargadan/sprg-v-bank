@@ -60,5 +60,5 @@ Please call _Validator.validateUserName_ at the very beginning of this method.
 You may now try entering invalid input on the login screen.
 
 ## Validating transaction and account details
-Please switch to git branch deep_modeling 
+Please switch to git branch deep_modeling   
 In IntelliJ: VCS -> Git -> Branches -> select origin/deep_modeling
