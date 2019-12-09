@@ -30,7 +30,7 @@ Please open ``ch.hslu.sprg.vbank.validator.UserNameValidationTest`` this is a si
 You can see that it tests not only valid and boundary values, but also possible SQLi and XSS payloads and inputs of extreme length. 
  
 ### Implement
-Please implement the validation logic in method __Validator.validateUserName__.
+Please implement the validation logic in method _Validator.validateUserName_.
 You should be fine when the above test runs successfully.
 
 ```java
@@ -55,6 +55,6 @@ You should be fine when the above test runs successfully.
 Validating the username should happen as early as possible, before any validation takes place.
 ``VBankAuthenticationProvider.loadUserByUsername(String uname)`` is the first method in our control which receives the username upon authentication.  
 
-Please call __Validator.validateUserName__ at the very beginning of this method.
+Please call _Validator.validateUserName_ at the very beginning of this method.
 
 You may now try entering invalid input on the login screen.
