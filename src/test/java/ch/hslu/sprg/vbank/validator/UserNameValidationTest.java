@@ -84,7 +84,8 @@ public class UserNameValidationTest {
                 });
     }
 
-    @Test(timeout = 100)
+    //timeout is in milliseconds
+    @Test(timeout = 200)
     public void testExtremeLengths() {
         Stream.<Supplier<String>>of(
                 () -> repeatString.apply("x", 10000),

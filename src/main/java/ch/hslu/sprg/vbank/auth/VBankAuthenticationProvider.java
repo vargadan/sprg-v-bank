@@ -1,5 +1,6 @@
 package ch.hslu.sprg.vbank.auth;
 
+import ch.hslu.sprg.vbank.validator.Validator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -31,6 +32,9 @@ public class VBankAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private Validator validator;
+
     private UserDetails loadUserByUsername(String uname) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
@@ -55,9 +59,9 @@ public class VBankAuthenticationProvider implements AuthenticationProvider {
             userDetails = this.loadUserByUsername(authentication.getPrincipal().toString());
         } catch (Exception e) {
             MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
-            throw new AuthenticationServiceException(messages.getMessage(
-                    "VBankAuthenticationProvider.authenticationError",
-                    "Authentication Error" ));
+            throw new BadCredentialsException(messages.getMessage(
+                    "VBankAuthenticationProvider.badCredentials",
+                    "Bad credentials"));
         }
         if (authentication != null && authentication.getCredentials() != null && userDetails != null &&
                 authentication.getCredentials().equals(userDetails.getPassword())) {
