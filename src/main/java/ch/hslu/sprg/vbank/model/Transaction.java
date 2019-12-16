@@ -2,10 +2,21 @@ package ch.hslu.sprg.vbank.model;
 
 import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
 import ch.hslu.sprg.vbank.model.domainprimitives.Amount;
+import ch.hslu.sprg.vbank.model.domainprimitives.Comment;
 import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
 
+import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "transaction")
+@XmlType(name = "transaction", propOrder = {
+        "fromAccountNo",
+        "toAccountNo",
+        "amount",
+        "currency",
+        "comment"
+})
 public class Transaction {
 
     public AccountNumber getFromAccountNo() {
@@ -16,16 +27,22 @@ public class Transaction {
         this.fromAccountNo = fromAccountNo;
     }
 
+    @XmlElement(required = true)
     AccountNumber fromAccountNo;
 
+    @XmlElement(required = true)
     AccountNumber toAccountNo;
 
+    @XmlElement(required = true)
     Amount amount;
 
+    @XmlElement(required = true)
     Currency currency;
 
-    String comment;
+    @XmlElement(required = true)
+    Comment comment;
 
+    @XmlTransient
     boolean executed;
 
     public Transaction(String fromAccountNo, String toAccountNo, BigDecimal amount, Currency currency, String comment, boolean executed) {
@@ -33,7 +50,7 @@ public class Transaction {
         this.toAccountNo = new AccountNumber(toAccountNo);
         this.amount = new Amount(amount);
         this.currency = currency;
-        this.comment = comment;
+        this.comment = new Comment(comment);
         this.executed = executed;
     }
 
@@ -64,11 +81,11 @@ public class Transaction {
         this.currency = currency;
     }
 
-    public String getComment() {
+    public Comment getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(Comment comment) {
         this.comment = comment;
     }
 
