@@ -2,10 +2,7 @@ package ch.hslu.sprg.vbank.service.impl;
 
 import ch.hslu.sprg.vbank.model.AccountDetails;
 import ch.hslu.sprg.vbank.model.Transaction;
-import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
-import ch.hslu.sprg.vbank.model.domainprimitives.Amount;
-import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
-import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
+import ch.hslu.sprg.vbank.model.domainprimitives.*;
 import ch.hslu.sprg.vbank.service.AccountService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +80,7 @@ public class JDBCAccountService implements AccountService {
         }
     }
 
-    private boolean transfer(AccountNumber fromAccountId, AccountNumber toAccountId, Amount amount, Currency currency, String comment) throws SQLException {
+    private boolean transfer(AccountNumber fromAccountId, AccountNumber toAccountId, Amount amount, Currency currency, Comment comment) throws SQLException {
 
             AccountDetails toAccount = getAccountDetails(toAccountId);
             AccountDetails fromAccount = getAccountDetails(fromAccountId);
@@ -111,12 +108,12 @@ public class JDBCAccountService implements AccountService {
             }
     }
 
-    private boolean insertTransaction(AccountNumber fromAccountId, AccountNumber toAccountId, Amount amount, Currency currency, String comment, boolean pending) throws SQLException {
+    private boolean insertTransaction(AccountNumber fromAccountId, AccountNumber toAccountId, Amount amount, Currency currency, Comment comment, boolean pending) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             StringBuilder insert = new StringBuilder("INSERT INTO TRANSACTION (FROM_ACCOUNT,TO_ACCOUNT,AMOUNT,CURRENCY,COMMENT,EXECUTED) VALUES('")
                     .append(fromAccountId).append("','").append(toAccountId).append("',")
                     .append(amount).append(",'").append(currency).append("','")
-                    .append(comment).append("',").append(!pending).append(")");
+                    .append(comment.getValue()).append("',").append(!pending).append(")");
             log.info("SQL creating transaction : " + insert.toString());
             return connection.createStatement().execute(insert.toString());
         }

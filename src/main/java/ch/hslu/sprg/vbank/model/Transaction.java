@@ -2,6 +2,7 @@ package ch.hslu.sprg.vbank.model;
 
 import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
 import ch.hslu.sprg.vbank.model.domainprimitives.Amount;
+import ch.hslu.sprg.vbank.model.domainprimitives.Comment;
 import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
 
 import javax.xml.bind.annotation.*;
@@ -39,7 +40,7 @@ public class Transaction {
     Currency currency;
 
     @XmlElement(required = true)
-    String comment;
+    Comment comment;
 
     @XmlTransient
     boolean executed;
@@ -49,7 +50,7 @@ public class Transaction {
         this.toAccountNo = new AccountNumber(toAccountNo);
         this.amount = new Amount(amount);
         this.currency = currency;
-        this.comment = comment;
+        this.comment = new Comment(comment);
         this.executed = executed;
     }
 
@@ -80,11 +81,11 @@ public class Transaction {
         this.currency = currency;
     }
 
-    public String getComment() {
+    public Comment getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(Comment comment) {
         this.comment = comment;
     }
 
