@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/actuator/health").permitAll().and()
                 //this is how we allow direct access of login without ripping of request parameters
                 // so that reflected XSS is possible on login page
-                .authorizeRequests().antMatchers("/login").permitAll().and()
+                .authorizeRequests().antMatchers("/login", "/nudget").permitAll().and()
                 //this is how we allow unauthenticated access of static resources
                 .authorizeRequests().antMatchers("/js/**", "/css/**", "/xml/**").permitAll()
                 .anyRequest()
