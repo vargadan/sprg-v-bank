@@ -3,7 +3,6 @@ package ch.hslu.sprg.vbank.service.rmi;
 import ch.hslu.sprg.vbank.model.AccountDetails;
 import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 import ch.hslu.sprg.vbank.service.AccountService;
-import org.junit.Assert;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +22,7 @@ public class AccountServiceRmiClient {
     @Bean
     public RmiProxyFactoryBean accountService() {
         RmiProxyFactoryBean rmiProxyFactory = new RmiProxyFactoryBean();
-        rmiProxyFactory.setServiceUrl("rmi://127.0.0.1:" + VBankRmiExporterFaccorty.RMI_PORT + "/X");
+        rmiProxyFactory.setServiceUrl("rmi://127.0.0.1:" + VBankRmiExporterFactory.RMI_PORT + "/X");
         rmiProxyFactory.setServiceInterface(AccountService.class);
         return rmiProxyFactory;
     }

@@ -16,6 +16,10 @@ public class SessionInvalidatorOnErrorFilter implements Filter {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(SessionInvalidatorOnErrorFilter.class);
 
     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
             chain.doFilter(request, response);
@@ -27,6 +31,11 @@ public class SessionInvalidatorOnErrorFilter implements Filter {
             }
             throw e;
         }
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
 }

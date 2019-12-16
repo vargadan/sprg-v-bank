@@ -9,7 +9,7 @@ import org.springframework.remoting.rmi.RmiServiceExporter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VBankRmiExporterFaccorty  {
+public class VBankRmiExporterFactory {
 
     public static final int RMI_PORT = 1099;
 
@@ -22,7 +22,7 @@ public class VBankRmiExporterFaccorty  {
         RmiServiceExporter exporter = new RmiServiceExporter();
         exporter.setServiceInterface(serviceInterface);
         exporter.setService(implementation);
-        exporter.setServiceName("X");
+        exporter.setServiceName("AccountService");
         exporter.setRegistryPort(RMI_PORT);
         return exporter;
     }

@@ -8,10 +8,19 @@ import javax.servlet.http.*;
 public class CsrfFilter implements Filter {
 
     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, ServletException {
         validate((HttpServletRequest) request, (HttpServletResponse) response);
         chain.doFilter(request, response);
         setToken((HttpServletRequest) request, (HttpServletResponse) response);
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
     /**
