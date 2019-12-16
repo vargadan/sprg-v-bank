@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE transactions [
+        <!ELEMENT fromAccountNo (#PCDATA)>
+        <!ELEMENT toAccountNo (#PCDATA)>
+        <!ELEMENT amount (#PCDATA)>
+        <!ELEMENT currency (#PCDATA)>
+        <!ELEMENT comment (#PCDATA)>
+        <!ELEMENT transaction (fromAccountNo, toAccountNo, amount, currency, comment)>
+        <!ELEMENT transactions (transaction*)>
+        <!ENTITY note1 "Hi, here is 100!">
+        <!ENTITY note2 "Hi again, here is 200!">
+        ]>
+<transactions>
+    <transaction>
+        <fromAccountNo>1-123456-01</fromAccountNo>
+        <toAccountNo>1-123456-02</toAccountNo>
+        <amount>100</amount>
+        <currency>CHF</currency>
+        <comment>&note1;</comment>
+    </transaction>
+    <transaction>
+        <fromAccountNo>1-123456-01</fromAccountNo>
+        <toAccountNo>1-123456-02</toAccountNo>
+        <amount>100</amount>
+        <currency>CHF</currency>
+        <comment>&note2;</comment>
+    </transaction>
+</transactions>

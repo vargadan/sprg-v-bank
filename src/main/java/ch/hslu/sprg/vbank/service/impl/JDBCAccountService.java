@@ -2,10 +2,7 @@ package ch.hslu.sprg.vbank.service.impl;
 
 import ch.hslu.sprg.vbank.model.AccountDetails;
 import ch.hslu.sprg.vbank.model.Transaction;
-import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
-import ch.hslu.sprg.vbank.model.domainprimitives.Amount;
-import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
-import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
+import ch.hslu.sprg.vbank.model.domainprimitives.*;
 import ch.hslu.sprg.vbank.service.AccountService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

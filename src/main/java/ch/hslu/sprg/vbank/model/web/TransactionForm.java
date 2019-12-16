@@ -3,18 +3,33 @@ package ch.hslu.sprg.vbank.model.web;
 import ch.hslu.sprg.vbank.model.Transaction;
 import ch.hslu.sprg.vbank.model.domainprimitives.Currency;
 
+import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "transaction")
+@XmlType(name = "transaction", propOrder = {
+        "fromAccountNo",
+        "toAccountNo",
+        "amount",
+        "currency",
+        "comment"
+})
 public class TransactionForm {
 
+    @XmlElement(required = true)
     String fromAccountNo;
 
+    @XmlElement(required = true)
     String toAccountNo;
 
+    @XmlElement(required = true)
     BigDecimal amount;
 
+    @XmlElement(required = true)
     String currency;
 
+    @XmlElement(required = true)
     String comment;
 
     public String getFromAccountNo() {

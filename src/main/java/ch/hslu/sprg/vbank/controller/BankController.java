@@ -6,6 +6,7 @@ import ch.hslu.sprg.vbank.model.Transactions;
 import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
 import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 import ch.hslu.sprg.vbank.model.web.TransactionForm;
+import ch.hslu.sprg.vbank.model.web.TransactionForms;
 import ch.hslu.sprg.vbank.service.AccountService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,20 +98,21 @@ public class BankController {
             model.addAttribute("error", "File is missing.");
             return new ModelAndView("redirect:/", model);
         }
-        JAXBContext context = JAXBContext.newInstance(Transactions.class, Transaction.class);
-        Transactions transactions = (Transactions) context.createUnmarshaller()
+        JAXBContext context = JAXBContext.newInstance(TransactionForms.class, TransactionForm.class);
+        TransactionForms transactionForms = (TransactionForms) context.createUnmarshaller()
                 .unmarshal(file.getInputStream());
-        if (!transactions.getTransactions().isEmpty()) {
-            transactions.getTransactions().forEach(transaction -> {
+        if (!transactionForms.getTransactionList().isEmpty()) {
+            transactionForms.getTransactionList().forEach(transactionForm -> {
                 try {
-                    accountService.transfer(transaction);
+                    accountService.transfer(transactionForm.toTransaction());
                 } catch (Exception e) {
                     log.error("Could not execute transaction", e);
                 }
             });
-            int size = transactions.getTransactions().size();
+            int size = transactionForms.getTransactionList().size();
             model.addAttribute("info", size + " transactions uploaded.");
         }
-        return new ModelAndView("redirect:/history", model);
+        AccountNumber accountNumber = this.accountService.getAccountDetailsForUser(new UserName(request.getRemoteUser())).get(0).getAccountNo();
+        return new ModelAndView("redirect:/history?accountNo=" + accountNumber.getValue(), model);
     }
 }

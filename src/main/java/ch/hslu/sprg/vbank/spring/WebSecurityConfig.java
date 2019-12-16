@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // so that reflected XSS is possible on login page
                 .authorizeRequests().antMatchers("/login").permitAll().and()
                 //this is how we allow unauthenticated access of static resources
-                .authorizeRequests().antMatchers("/js/**", "/css/**").permitAll()
+                .authorizeRequests().antMatchers("/js/**", "/css/**", "/xml/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

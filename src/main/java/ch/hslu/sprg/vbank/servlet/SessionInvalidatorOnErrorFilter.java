@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@Component
-@Order(1)
+//@Component
+//@Order(1)
 public class SessionInvalidatorOnErrorFilter implements Filter {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(SessionInvalidatorOnErrorFilter.class);

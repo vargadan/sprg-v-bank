@@ -40,12 +40,12 @@
     </script>
     <div class="container" id="accounts-holder">
     </div>
-<%--    <div class="container">--%>
-<%--        <form method="POST" action="/uploadTransactions" enctype="multipart/form-data">--%>
-<%--            <label path="file">Select XML file with transactions</label>--%>
-<%--            <br/>--%>
-<%--            <input type="file" name="file" class="file-upload" />--%>
-<%--            <input id="upload-button" type="submit" class="button" value="Send" />--%>
-<%--        </form>--%>
-<%--    </div>--%>
+    <div class="container">
+        <form method="POST" action="/uploadTransactions" enctype="multipart/form-data">
+            <label path="file">Select XML file with transactions</label>
+            <br/>
+            <input type="file" name="file" class="file-upload" />
+            <input id="upload-button" type="submit" class="button" value="Send" />
+        </form>
+    </div>
 </t:page>

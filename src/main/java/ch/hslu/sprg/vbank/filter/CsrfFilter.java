@@ -3,8 +3,8 @@ package ch.hslu.sprg.vbank.filter;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-@org.springframework.stereotype.Component
-@org.springframework.core.annotation.Order(1)
+//@org.springframework.stereotype.Component
+//@org.springframework.core.annotation.Order(1)
 public class CsrfFilter implements Filter {
 
     @Override

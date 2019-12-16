@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Amount implements Serializable {
 
-    private BigDecimal value;
+    private final BigDecimal value;
 
     public Amount(String amount) {
         this(new BigDecimal(amount));
