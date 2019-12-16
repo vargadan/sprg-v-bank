@@ -3,6 +3,10 @@ package ch.hslu.sprg.vbank.controller;
 import ch.hslu.sprg.vbank.model.AccountDetails;
 import ch.hslu.sprg.vbank.model.Transaction;
 import ch.hslu.sprg.vbank.model.Transactions;
+import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
+import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
+import ch.hslu.sprg.vbank.model.web.TransactionForm;
+import ch.hslu.sprg.vbank.model.web.TransactionForms;
 import ch.hslu.sprg.vbank.service.AccountService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
+import javax.validation.ValidationException;
 import javax.xml.bind.JAXBContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +44,8 @@ public class BankController {
     @RequestMapping("/")
     public String home(Model model) throws Exception {
         String user = request.getRemoteUser();
-        List<String> accountIds = new ArrayList<>();
-        List<AccountDetails> accountDetailsList = accountService.getAccountDetailsForUser(user);
+        List<AccountNumber> accountIds = new ArrayList<>();
+        List<AccountDetails> accountDetailsList = accountService.getAccountDetailsForUser(new UserName(user));
         accountDetailsList.forEach(accountDetails -> accountIds.add(accountDetails.getAccountNo()));
         model.addAttribute("accountIds", accountIds);
         return "home";
@@ -49,7 +54,7 @@ public class BankController {
     @RequestMapping("/home_legacy")
     public String home_legacy(Model model) throws Exception {
         String user = request.getRemoteUser();
-        List<AccountDetails> accountDetailsList = accountService.getAccountDetailsForUser(user);
+        List<AccountDetails> accountDetailsList = accountService.getAccountDetailsForUser(new UserName(user));
         model.addAttribute("accounts", accountDetailsList);
         return "home_legacy";
     }
@@ -57,26 +62,34 @@ public class BankController {
     @RequestMapping("/history")
     public String history(Model model) throws Exception {
         String accountNo = request.getParameter("accountNo");
-        List<Transaction> transactions = accountService.getTransactionHistory(accountNo);
+        List<Transaction> transactions = accountService.getTransactionHistory(new AccountNumber(accountNo));
         model.addAttribute("transactions", transactions);
         model.addAttribute("accountNo", accountNo);
         return "history";
     }
 
     @RequestMapping(value = "/transfer", method = RequestMethod.GET)
-    public ModelAndView transaction(@ModelAttribute Transaction transaction, Model model) {
-        return new ModelAndView("transfer", "transaction", new Transaction());
+    public ModelAndView transaction(@ModelAttribute TransactionForm transaction, Model model) {
+        return new ModelAndView("transfer", "transaction", new TransactionForm());
     }
 
     @RequestMapping(value = "/doTransfer", method = RequestMethod.POST)
-    public ModelAndView doTransfer(@ModelAttribute Transaction transaction, ModelMap model) throws Exception {
-        if (accountService.transfer(transaction.getFromAccountNo(), transaction.getToAccountNo(), transaction.getAmount(),
-                transaction.getCurrency(), transaction.getComment())) {
-            model.addAttribute("info", "Transaction was completed.");
-        } else {
-            model.addAttribute("info", "Transaction is pending.");
+    public ModelAndView doTransfer(@ModelAttribute TransactionForm transactionForm, ModelMap model) {
+        //only execute transfer if the transaction data is valid
+        try {
+            Transaction transaction = transactionForm.toTransaction();
+            //transaction is always in valid state if constructed due to its domain primitive types.
+            //therefore, no need to validate.
+            if (accountService.transfer(transaction)) {
+                model.addAttribute("info", "Transaction was completed.");
+            } else {
+                model.addAttribute("info", "Transaction is pending.");
+            }
+            return new ModelAndView("redirect:/", model);
+        } catch (ValidationException ve){
+            model.addAttribute("error", ve.getMessage());
+            return new ModelAndView("transfer", model);
         }
-        return new ModelAndView("redirect:/", model);
     }
 
     @PostMapping("/uploadTransactions")
@@ -85,20 +98,21 @@ public class BankController {
             model.addAttribute("error", "File is missing.");
             return new ModelAndView("redirect:/", model);
         }
-        JAXBContext context = JAXBContext.newInstance(Transactions.class, Transaction.class);
-        Transactions transactions = (Transactions) context.createUnmarshaller()
+        JAXBContext context = JAXBContext.newInstance(TransactionForms.class, TransactionForm.class);
+        TransactionForms transactionForms = (TransactionForms) context.createUnmarshaller()
                 .unmarshal(file.getInputStream());
-        if (!transactions.getTransactions().isEmpty()) {
-            transactions.getTransactions().forEach(transaction -> {
+        if (!transactionForms.getTransactionList().isEmpty()) {
+            transactionForms.getTransactionList().forEach(transactionForm -> {
                 try {
-                    doTransfer(transaction, model);
+                    accountService.transfer(transactionForm.toTransaction());
                 } catch (Exception e) {
                     log.error("Could not execute transaction", e);
                 }
             });
-            int size = transactions.getTransactions().size();
+            int size = transactionForms.getTransactionList().size();
             model.addAttribute("info", size + " transactions uploaded.");
         }
-        return new ModelAndView("redirect:/history", model);
+        AccountNumber accountNumber = this.accountService.getAccountDetailsForUser(new UserName(request.getRemoteUser())).get(0).getAccountNo();
+        return new ModelAndView("redirect:/history?accountNo=" + accountNumber.getValue(), model);
     }
 }

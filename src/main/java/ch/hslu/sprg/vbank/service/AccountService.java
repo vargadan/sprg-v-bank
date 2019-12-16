@@ -2,17 +2,18 @@ package ch.hslu.sprg.vbank.service;
 
 import ch.hslu.sprg.vbank.model.AccountDetails;
 import ch.hslu.sprg.vbank.model.Transaction;
+import ch.hslu.sprg.vbank.model.domainprimitives.AccountNumber;
+import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface AccountService {
 
-    List<AccountDetails> getAccountDetailsForUser(String userId) throws Exception;
+    List<AccountDetails> getAccountDetailsForUser(UserName userId);
 
-    AccountDetails getAccountDetails(String accountId) throws Exception;
+    AccountDetails getAccountDetails(AccountNumber accountId);
 
-    boolean transfer(String fromAcountId, String toAccountId, BigDecimal amount, String currency, String note) throws Exception;
+    boolean transfer(Transaction transaction);
 
-    List<Transaction> getTransactionHistory(String accountNo) throws Exception;
+    List<Transaction> getTransactionHistory(AccountNumber accountNo);
 }

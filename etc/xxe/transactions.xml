@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transactions>
+    <transaction>
+        <fromAccountNo>1-123456-01</fromAccountNo>
+        <toAccountNo>1-123456-02</toAccountNo>
+        <amount>100</amount>
+        <currency>CHF</currency>
+        <comment>Hi!</comment>
+    </transaction>
+    <transaction>
+        <fromAccountNo>1-123456-01</fromAccountNo>
+        <toAccountNo>1-123456-02</toAccountNo>
+        <amount>200</amount>
+        <currency>CHF</currency>
+        <comment>Hi Again!</comment>
+    </transaction>
+</transactions>

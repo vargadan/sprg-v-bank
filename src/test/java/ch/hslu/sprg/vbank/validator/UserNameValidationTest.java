@@ -1,7 +1,7 @@
 package ch.hslu.sprg.vbank.validator;
 
+import ch.hslu.sprg.vbank.model.domainprimitives.UserName;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.validation.ValidationException;
@@ -15,8 +15,6 @@ public class UserNameValidationTest {
 
     private static final Logger logger = Logger.getAnonymousLogger();
 
-    private Validator validator;
-
     BiFunction<String, Integer, String> repeatString = (str, count) -> {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i<count; i++) {
@@ -25,34 +23,30 @@ public class UserNameValidationTest {
         return stringBuilder.toString();
     };
 
-    @Before
-    public void init() {
-        validator = new Validator();
-    }
 
     @Test(expected = ValidationException.class)
     public void testZeroLength() {
-        validator.validateUserName("");
+        new UserName("");
     }
 
     @Test(expected = ValidationException.class)
     public void testBelowMinLength() {
-        validator.validateUserName("xy");
+        new UserName("xy");
     }
 
     @Test
     public void testOnMinLength() {
-        validator.validateUserName("xyz");
+        new UserName("xyz");
     }
 
     @Test(expected = ValidationException.class)
     public void testAboveMaxLength() {
-        validator.validateUserName("abcdefghij__________0123456789_");
+        new UserName("abcdefghij__________0123456789_");
     }
 
     @Test
     public void testOnMaxLength() {
-        validator.validateUserName("abcdefghij__________0123456789");
+        new UserName("abcdefghij__________0123456789");
     }
 
     //these should all succeed
@@ -61,7 +55,7 @@ public class UserNameValidationTest {
         Arrays.asList("Hello","Hello_","Hello_01", "01Hello", "01_Hello", "_01Hello", "010203")
                 .forEach(username -> {
                     try {
-                        validator.validateUserName(username);
+                        new UserName(username);
                     } catch (ValidationException ve) {
                         Assert.fail("This should be valid : " + username);
                     }
@@ -77,7 +71,7 @@ public class UserNameValidationTest {
                 "0 or 1=1", "' or 0=0 --", "\" or 0=0 --")
                 .forEach(username -> {
                     try {
-                        validator.validateUserName(username);
+                        new UserName(username);
                         Assert.fail("This should be invalid : " + username);
                     } catch (ValidationException ve) {
                     }
@@ -96,7 +90,7 @@ public class UserNameValidationTest {
                     try {
                         String username = stringSupplier.get();
                         logger.info("username.length : " + username.length());
-                        validator.validateUserName(username);
+                        new UserName(username);
                         Assert.fail("This should be invalid : " + username);
                     } catch (ValidationException ve) {
                     }

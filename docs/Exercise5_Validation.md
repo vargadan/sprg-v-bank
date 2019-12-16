@@ -62,3 +62,23 @@ You may now try entering invalid input on the login screen.
 ## Validating transaction and account details
 Please switch to git branch deep_modeling   
 In IntelliJ: VCS -> Git -> Branches -> select origin/deep_modeling
+
+Now that you are in the right branch.  
+In this branch validation is enforced with custom types:
+- UserName: can hold only a valid username
+- AccountNumber: can hold only a valid account number (adhering to the pattern 1-23456-78)
+- Amount: can hold only a valid account number (positive max 2 decimal points)
+- Currency: : can hold only a valid currency (CHF,USD,EUR,GBP)
+
+### Review Changes:
+Please open below classes:
+- ``ch.hslu.sprg.vbank.model.domainprimitives.UserName``: you can see that this class enforces validity rules in its constructor.   
+The same applies to the ``AccountNumber, Amount`` classes. 
+``Currency`` is an enum class, it has no constructor, one can only create a valid instance out of a pre-defined set. 
+- ``ch.hslu.sprg.vbank.validator.UserNameValidationTest``: you can see that the validation testing is now done against the constructor of the model class.
+- ``ch.hslu.sprg.vbank.service.AccountService``: this interface and the implementing classes now only accept custom types of our domain that enforce validation rules.  
+This gives us a lot more guarantees that the data our application works with is valid in terms of business rules and it does not contain malicious XSS/SQLi payloads neither (provided, if the validation rules are strict enough).
+
+##Task
+``Transaction.comment`` is still a 'primitive' string type.  
+Please refactor it to a custom type that resists XSS and SQLi payloads. 

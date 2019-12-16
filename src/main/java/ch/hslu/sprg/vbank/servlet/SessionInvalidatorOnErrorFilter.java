@@ -9,11 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@Component
-@Order(1)
+//@Component
+//@Order(1)
 public class SessionInvalidatorOnErrorFilter implements Filter {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(SessionInvalidatorOnErrorFilter.class);
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -27,6 +31,11 @@ public class SessionInvalidatorOnErrorFilter implements Filter {
             }
             throw e;
         }
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
 }
